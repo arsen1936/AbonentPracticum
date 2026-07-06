@@ -30,6 +30,7 @@ builder.Services.AddSingleton<IUtilityService, SumNumbersService>();
 builder.Services.AddSingleton<IUtilityService, HashCalculatorService>();
 builder.Services.AddSingleton<IUtilityService, NumberConverterService>();
 builder.Services.AddSingleton<IUtilityService, TextToListService>();
+builder.Services.AddSingleton<IUtilityService, StringSorterService>();
 // builder.Services.AddSingleton<IUtilityService, MyNewService>();  // ← пример для новой утилиты
 
 // --- Swagger ---
