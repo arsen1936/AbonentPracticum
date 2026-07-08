@@ -21,8 +21,8 @@ public class MultipleSubstitutionTextService : IUtilityService
             throw new ArgumentException("Некорректный JSON.", ex);
         }
 
-        if (request == null)
-            throw new ArgumentException("Пустой JSON.");
+        if (request != null && request.Replacements.Count == 0)
+            throw new ArgumentException("Добавьте хотя бы одну замену.");
 
         if (string.IsNullOrEmpty(request.Text))
             throw new ArgumentException("Поле text обязательно.");
@@ -30,8 +30,8 @@ public class MultipleSubstitutionTextService : IUtilityService
         if (request.Replacements == null)
             throw new ArgumentException("Поле replacements обязательно.");
 
-        if (request.Replacements.Keys.Any(string.IsNullOrEmpty))
-            throw new ArgumentException("Ключи replacements не могут быть пустыми.");
+        if (request.Replacements.Any(p => string.IsNullOrWhiteSpace(p.Key)))
+            throw new ArgumentException("Строка для поиска не может быть пустой.");
 
         return GetReplacementString(request.Text, request.Replacements);
     }

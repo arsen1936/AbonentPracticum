@@ -1,14 +1,17 @@
 // Простой хэш-роутер
 const Router = {
-    _routes: {},
+    _routes: [],
 
     register(pattern, handler) {
-        this._routes[pattern] = handler;
+        this._routes.push({
+            pattern,
+            handler
+        });
     },
 
     navigate(hash) {
         const path = hash.replace('#', '') || 'dashboard';
-        for (const [pattern, handler] of Object.entries(this._routes)) {
+        for (const {pattern, handler} of this._routes) {
             // Поддержка параметров: utility/:endpoint
             const regex = new RegExp('^' + pattern.replace(/:(\w+)/g, '(?<$1>[^/]+)') + '$');
             const match = path.match(regex);

@@ -2,6 +2,8 @@
 (function () {
     // Регистрация маршрутов
     Router.register('dashboard', () => DashboardPage.render());
+    Router.register('utility/number-base', () => NumberConverterPage.render());
+    Router.register('utility/multi-replace', () => MultipleSubstitutionText.render());
     Router.register('utility/:endpoint', (params) => UtilityPage.render(params));
 
     // Старт
