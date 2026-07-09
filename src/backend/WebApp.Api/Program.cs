@@ -32,6 +32,7 @@ builder.Services.AddSingleton<IUtilityService, NumberConverterService>();
 builder.Services.AddSingleton<IUtilityService, TextToListService>();
 builder.Services.AddSingleton<IUtilityService, StringSorterService>();
 builder.Services.AddSingleton<IUtilityService, MultipleSubstitutionTextService>();
+builder.Services.AddSingleton<IUtilityService, RegularExpressionBuilderService>(); 
 // builder.Services.AddSingleton<IUtilityService, MyNewService>();  // ← пример для новой утилиты
 
 // --- Swagger ---

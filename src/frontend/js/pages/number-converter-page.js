@@ -30,41 +30,41 @@ const NumberConverterPage = {
             }
 
             html += `
-<div class="utility-detail">
-    <div class="input-group">
-        <label for="number-input">Число:</label>
-        <input
-            type="text"
-            id="number-input"
-            placeholder="Введите число">
-    </div>
-
-    <div class="input-group">
-        <label for="from-base">Из системы:</label>
-        <select id="from-base">
-            <option value="bin">2 (двоичная)</option>
-            <option value="oct">8 (восьмеричная)</option>
-            <option value="dec" selected>10 (десятичная)</option>
-            <option value="hex">16 (шестнадцатеричная)</option>
-        </select>
-    </div>
-
-    <div class="input-group">
-        <label for="to-base">В систему:</label>
-        <select id="to-base">
-            <option value="bin">2 (двоичная)</option>
-            <option value="oct">8 (восьмеричная)</option>
-            <option value="dec">10 (десятичная)</option>
-            <option value="hex" selected>16 (шестнадцатеричная)</option>
-        </select>
-    </div>
-
-    <button class="btn btn-primary" id="btn-execute">
-        ▶ Выполнить
-    </button>
-
-    <div id="exec-result"></div>
-</div>`;
+            <div class="utility-detail">
+                <div class="input-group">
+                    <label for="number-input">Число:</label>
+                    <input
+                        type="text"
+                        id="number-input"
+                        placeholder="Введите число">
+                </div>
+            
+                <div class="input-group">
+                    <label for="from-base">Из системы:</label>
+                    <select id="from-base">
+                        <option value="bin">2 (двоичная)</option>
+                        <option value="oct">8 (восьмеричная)</option>
+                        <option value="dec" selected>10 (десятичная)</option>
+                        <option value="hex">16 (шестнадцатеричная)</option>
+                    </select>
+                </div>
+            
+                <div class="input-group">
+                    <label for="to-base">В систему:</label>
+                    <select id="to-base">
+                        <option value="bin">2 (двоичная)</option>
+                        <option value="oct">8 (восьмеричная)</option>
+                        <option value="dec">10 (десятичная)</option>
+                        <option value="hex" selected>16 (шестнадцатеричная)</option>
+                    </select>
+                </div>
+            
+                <button class="btn btn-primary" id="btn-execute">
+                    ▶ Выполнить
+                </button>
+            
+                <div id="exec-result"></div>
+            </div>`;
 
             // История
             if (history && history.length > 0) {

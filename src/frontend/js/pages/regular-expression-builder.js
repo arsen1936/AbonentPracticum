@@ -1,15 +1,15 @@
 ﻿// Страница конкретной утилиты (выполнение + история)
-const MultipleSubstitutionText = {
+const RegularExpressionBuilder = {
     async render() {
         const content = document.getElementById('app-content');
-        const endpoint = "multi-replace";
+        const endpoint = "regex-tester";
 
         content.innerHTML = '<div class="loading">Загрузка утилиты</div>';
 
         try {
             const [utility, history] = await Promise.all([API.get(`/utilities/${endpoint}`), API.get(`/utilities/${endpoint}/history?limit=10`)]);
 
-            const stars = '★★'.repeat(utility.difficulty) + '☆'.repeat(3 - utility.difficulty);
+            const stars = '★★★'.repeat(utility.difficulty) + '☆'.repeat(3 - utility.difficulty);
 
             let html = `
                 <a href="#dashboard" class="back-link">← Назад к списку</a>
@@ -31,28 +31,28 @@ const MultipleSubstitutionText = {
 
             html += `
             <div class="utility-detail">
-            
                 <div class="input-group">
-                    <label for="text-input">Исходный текст:</label>
-                    <textarea
-                        id="text-input"
-                        rows="6"
-                        placeholder="Введите текст"></textarea>
+                    <label for="pattern-input">Регулярное выражение:</label>
+                    <input
+                        type="text"
+                        id="pattern-input"
+                        placeholder="Например: \\d{3}-\\d{2}-\\d{2}">
                 </div>
             
                 <div class="input-group">
-                    <label>Замены:</label>
+                    <label for="flags-input">Флаги:</label>
+                    <input
+                        type="text"
+                        id="flags-input"
+                        placeholder="Например: gi">
+                </div>
             
-                    <div id="replacement-list">
-                        <div class="replacement-row">
-                            <input type="text" class="replace-from" placeholder="Что заменить">
-                            <input type="text" class="replace-to" placeholder="На что заменить">
-                        </div>
-                    </div>
-            
-                    <button class="btn" id="btn-add-replacement">
-                        + Добавить замену
-                    </button>
+                <div class="input-group">
+                    <label for="text-input">Текст:</label>
+                    <textarea
+                        id="text-input"
+                        rows="6"
+                        placeholder="Введите текст для проверки"></textarea>
                 </div>
             
                 <button class="btn btn-primary" id="btn-execute">
@@ -60,7 +60,6 @@ const MultipleSubstitutionText = {
                 </button>
             
                 <div id="exec-result"></div>
-            
             </div>`;
 
             // История
@@ -82,70 +81,37 @@ const MultipleSubstitutionText = {
 
             content.innerHTML = html;
 
-            document.getElementById("btn-add-replacement").addEventListener("click", () => {
-                const list = document.getElementById("replacement-list");
-
-                list.insertAdjacentHTML(
-                    "beforeend",
-                    `
-            <div class="replacement-row">
-                <input type="text" class="replace-from" placeholder="Что заменить">
-                <input type="text" class="replace-to" placeholder="На что заменить">
-            </div>
-            `
-                    );
-                });
-
             // Обработчик кнопки «Выполнить»
-            document.getElementById("btn-execute").addEventListener("click", async () => {
-
-                const text = document.getElementById("text-input").value;
-                const resultDiv = document.getElementById("exec-result");
-
-                const replacements = {};
-
-                document.querySelectorAll(".replacement-row").forEach(row => {
-
-                    const from = row.querySelector(".replace-from").value.trim();
-                    const to = row.querySelector(".replace-to").value;
-
-                    if (from !== "") {
-                        replacements[from] = to;
-                    }
-                });
-
-                const input = JSON.stringify({
-                    text,
-                    replacements
-                });
+            document.getElementById('btn-execute').addEventListener('click', async () => {
+                const pattern = document.getElementById('pattern-input').value;
+                const flags = document.getElementById('flags-input').value;
+                const text = document.getElementById('text-input').value;
+                const resultDiv = document.getElementById('exec-result');
 
                 resultDiv.innerHTML = '<div class="loading">Выполнение...</div>';
 
-                try {
+                const input = JSON.stringify({
+                    pattern,
+                    flags,
+                    text
+                });
 
-                    const result = await API.post(
-                        `/utilities/${endpoint}/execute`,
-                        { input }
-                    );
+                try {
+                    const result = await API.post(`/utilities/${endpoint}/execute`, { input });
 
                     if (result.success) {
-
                         resultDiv.innerHTML = `
                 <div class="output-area">
                     <label>Результат:</label>
-                    <pre>${MultipleSubstitutionText.escape(result.output)}</pre>
+                    <pre>${RegularExpressionBuilder.escape(result.output)}</pre>
                 </div>`;
-
                     } else {
-
-                        resultDiv.innerHTML =
-                            `<div class="error-message">${MultipleSubstitutionText.escape(result.error)}</div>`;
+                        resultDiv.innerHTML = `
+                <div class="error-message">${RegularExpressionBuilder.escape(result.error)}</div>`;
                     }
-
                 } catch (err) {
-
-                    resultDiv.innerHTML =
-                        `<div class="error-message">Ошибка: ${err.message}</div>`;
+                    resultDiv.innerHTML = `
+            <div class="error-message">Ошибка: ${err.message}</div>`;
                 }
             });
 
