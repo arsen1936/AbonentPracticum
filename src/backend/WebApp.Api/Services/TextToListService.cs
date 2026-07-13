@@ -50,14 +50,14 @@ public class TextToListService : IUtilityService
 
     private string ToCSList(string input)
     {
-        string list = "var items = new List<string>\n{";
+        string list = "var items = new List<string>\n{\n";
         foreach (string line in input.Split("\n"))
         {
-            list = list + "\"" + line + "\",\n";
+            list = list + "    \"" + line + "\",\n";
         }
 
         list = list.Substring(0, list.Length - 2);
-        list += "};";
+        list += "\n};";
         return list;
     }
 

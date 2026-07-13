@@ -22,7 +22,7 @@ public class StringSorterService : IUtilityService
         string sortedLines = sortingOrder.ToLower() switch
         {
             "asc" => getASCLines(lines),
-            "desc" => getDECLines(lines),
+            "desc" => GetDescLines(lines),
             _ => throw new Exception("Неправильно указан способ сортировки")
         };
         return sortedLines;
@@ -46,7 +46,7 @@ public class StringSorterService : IUtilityService
         return string.Join(", ", asc);
     }
 
-    private string getDECLines(string[] lines)
+    private string GetDescLines(string[] lines)
     {
         var desc = new SortedSet<string>(
             Comparer<string>.Create((a, b) => string.Compare(b, a)));
