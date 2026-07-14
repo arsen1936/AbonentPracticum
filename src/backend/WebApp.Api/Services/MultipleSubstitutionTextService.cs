@@ -21,17 +21,17 @@ public class MultipleSubstitutionTextService : IUtilityService
             throw new ArgumentException("Некорректный JSON.", ex);
         }
 
-        if (request != null && request.Replacements.Count == 0)
-            throw new ArgumentException("Добавьте хотя бы одну замену.");
-
-        if (string.IsNullOrEmpty(request.Text))
-            throw new ArgumentException("Поле text обязательно.");
+        if (request == null)
+            throw new ArgumentException("Некорректный JSON.");
 
         if (request.Replacements == null)
             throw new ArgumentException("Поле replacements обязательно.");
 
-        if (request.Replacements.Any(p => string.IsNullOrWhiteSpace(p.Key)))
-            throw new ArgumentException("Строка для поиска не может быть пустой.");
+        if (request.Replacements.Count == 0)
+            throw new ArgumentException("Добавьте хотя бы одну замену.");
+
+        if (string.IsNullOrEmpty(request.Text))
+            throw new ArgumentException("Поле text обязательно.");
 
         return GetReplacementString(request.Text, request.Replacements);
     }
