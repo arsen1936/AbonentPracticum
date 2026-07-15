@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -26,13 +27,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ВАЖНО ДЛЯ СТУДЕНТОВ: здесь регистрируются ВСЕ утилиты.
 // Чтобы добавить свою — скопируйте строку ниже и замените SumNumbersService на свой класс:
 builder.Services.AddSingleton<UtilityOrchestrator>();
-builder.Services.AddSingleton<IUtilityService, SumNumbersService>();
-builder.Services.AddSingleton<IUtilityService, HashCalculatorService>();
-builder.Services.AddSingleton<IUtilityService, NumberConverterService>();
-builder.Services.AddSingleton<IUtilityService, TextToListService>();
-builder.Services.AddSingleton<IUtilityService, StringSorterService>();
-builder.Services.AddSingleton<IUtilityService, MultipleSubstitutionTextService>();
-builder.Services.AddSingleton<IUtilityService, RegularExpressionBuilderService>(); 
+var utilityType = typeof(IUtilityService);
+
+var implementations = Assembly.GetExecutingAssembly()
+    .GetTypes()
+    .Where(t => utilityType.IsAssignableFrom(t)
+                && t.IsClass
+                && !t.IsAbstract);
+
+foreach (var implementation in implementations)
+{
+    builder.Services.AddSingleton(utilityType, implementation);
+}
+
 // builder.Services.AddSingleton<IUtilityService, MyNewService>();  // ← пример для новой утилиты
 
 // --- Swagger ---
