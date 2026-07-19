@@ -17,7 +17,7 @@ public class TextToListService : IUtilityService
         }
         else
         {
-            throw new Exception("Invalid input");
+            throw new Exception("Некорректный ввод");
         }
     }
 

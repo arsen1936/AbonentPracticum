@@ -33,6 +33,6 @@ public class UuidGeneratorServiceTests
     [InlineData("0")]
     public void Execute_InvalidInput_ShouldThrow(string input)
     {
-        Assert.Throws<Exception>(() => _service.Execute(input));
+        Assert.Throws<ArgumentException>(() => _service.Execute(input));
     }
 }

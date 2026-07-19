@@ -60,7 +60,7 @@ public class HashCalculatorService : IUtilityService {
         }
         else
         {
-            throw new Exception("Invalid input");
+            throw new Exception("Некорректный ввод");
         }
     }
 

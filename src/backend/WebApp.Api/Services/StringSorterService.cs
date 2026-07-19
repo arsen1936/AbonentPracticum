@@ -13,7 +13,7 @@ public class StringSorterService : IUtilityService
         }
         else
         {
-            throw new Exception("Input string was not in a correct format");
+            throw new Exception("Неккоректный формат ввелённой строки");//перепроверить исключения, проверить ранние утилиты
         }
     }
 
@@ -21,26 +21,20 @@ public class StringSorterService : IUtilityService
     {
         string sortedLines = sortingOrder.ToLower() switch
         {
-            "asc" => getASCLines(lines),
+            "asc" => GetASCLines(lines),
             "desc" => GetDescLines(lines),
             _ => throw new Exception("Неправильно указан способ сортировки")
         };
         return sortedLines;
     }
 
-    private string getASCLines(string[] lines)
+    //обхединить в один метод
+    private string GetASCLines(string[] lines)
     {
         var asc = new SortedSet<string>();
         foreach (var line in lines)
         {
-            if (line.Any(char.IsWhiteSpace))
-            {
-                throw new Exception("Строка должна содержать только одно слово.");
-            }
-            else
-            {
-                asc.Add(line);
-            }
+            asc.Add(line);
         }
 
         return string.Join(", ", asc);
@@ -52,14 +46,7 @@ public class StringSorterService : IUtilityService
             Comparer<string>.Create((a, b) => string.Compare(b, a)));
         foreach (var line in lines)
         {
-            if (line.Any(char.IsWhiteSpace))
-            {
-                throw new Exception("Строка должна содержать только одно слово.");
-            }
-            else
-            {
-                desc.Add(line);
-            }
+            desc.Add(line);
         }
 
         return string.Join(", ", desc);

@@ -8,20 +8,14 @@ public class UuidGeneratorService : IUtilityService
     
     public string Execute(string input)
     {
-        try
-        {
-            if (!int.TryParse(input, out var uuidCount))
-                throw new ArgumentException("Количество строк должно быть целым числом");
+  
+        if (!int.TryParse(input, out var uuidCount))
+            throw new ArgumentException("Количество строк должно быть целым числом");
 
-            if (uuidCount <= 0)
-                throw new ArgumentException("Количество строк должно быть больше 0");
+        if (uuidCount <= 0)
+            throw new ArgumentException("Количество строк должно быть больше 0");
 
-            return GenerateSeveralUuid(uuidCount);
-        }
-        catch (Exception e)
-        {
-            throw new Exception(e.Message);
-        }
+        return GenerateSeveralUuid(uuidCount);
     }
     
     private string GenerateUuid()
