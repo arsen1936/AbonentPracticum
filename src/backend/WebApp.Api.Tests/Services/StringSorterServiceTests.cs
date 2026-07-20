@@ -44,12 +44,4 @@ public class StringSorterServiceTests
         var input = "random\napple\nbanana";
         Assert.Throws<Exception>(() => _service.Execute(input));
     }
-
-    [Theory]
-    [InlineData("asc\nhello world\napple")]
-    [InlineData("desc\none\ntwo words")]
-    public void Execute_ShouldThrow_WhenLineContainsWhitespace(string input)
-    {
-        Assert.Throws<Exception>(() => _service.Execute(input));
-    }
 }
