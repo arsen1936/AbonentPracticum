@@ -71,8 +71,8 @@ const RegularExpressionBuilder = {
                     <div class="history-item">
                         <div class="history-time">${new Date(h.executedAt).toLocaleString('ru-RU')}</div>
                         <div class="history-io">
-                            <div><strong>Вход:</strong><code>${UtilityPage.escape(h.input)}</code></div>
-                            <div><strong>Выход:</strong><code>${UtilityPage.escape(h.output)}</code></div>
+                            <div><strong>Вход:</strong><code>${RegularExpressionBuilder.escape(h.input)}</code></div>
+                            <div><strong>Выход:</strong><code>${RegularExpressionBuilder.escape(h.output)}</code></div>
                         </div>
                     </div>`;
                 });
